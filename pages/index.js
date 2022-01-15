@@ -12,13 +12,13 @@ export default function Home({sports, leagues}) {
       <div className='p-3'><h2>upcoming games</h2>
         {sports.body.map((sport) => {
 
-          return <h1>{sport.title}</h1>
+          return <h1 key={sport.id}>{sport.title}</h1>
         })}
       </div>
       <div className='p-3'>
       {leagues.body.map((league) => {
 
-return <h1>{league.title}</h1>
+return <h1 key={league.id}>{league.title}</h1>
 })}
 </div>
    </div>

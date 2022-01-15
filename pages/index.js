@@ -26,7 +26,7 @@ return <h1 key={league.id}>{league.title}</h1>
   )
 }
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
 
   const sportData = await supabase
   .from('Sport')

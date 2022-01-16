@@ -7,54 +7,40 @@ import { supabase } from '../utils/supabaseClient'
 export default function Home({sports, leagues}) {
   return (
     <>
-   <h1 className='center justify-center flex text-green-500'>my supabase app</h1>
-   <div className='center flex justify-center'>
-      <div className='p-3'><h2>upcoming games</h2>
-        {sports.body.map((sport) => {
-
-          return <h1 key={sport.id}>{sport.title}</h1>
-        })}
-      </div>
-      <div className='p-3'>
-      {leagues.body.map((league) => {
-
-return <h1 key={league.id}>{league.title}</h1>
-})}
-</div>
-   </div>
+   <h1 className='center justify-center flex text-green-500'>my supabase app</h1>      
    </>
   )
 }
 
-export async function getServerSideProps(){
+// export async function getServerSideProps(){
 
-  const sportData = await supabase
-  .from('Sport')
-  .select()
+//   const sportData = await supabase
+//   .from('Sport')
+//   .select()
 
-  const leagueData = await supabase
-  .from('League')
-  .select(`
-    title,
-      Sport (
-        title
-      )
-  `)
+//   const leagueData = await supabase
+//   .from('League')
+//   .select(`
+//     title,
+//       Sport (
+//         title
+//       )
+//   `)
 
  
-  const sports =  await sportData
-  const leagues =  await leagueData
+//   const sports =  await sportData
+//   const leagues =  await leagueData
  
   
-  console.log(leagues.body[0].Sport.title)
+//   console.log(leagues.body[0].Sport.title)
 
 
 
-  return {
+//   return {
 
-    props: { 
-      sports,
-      leagues,
-    }
-  }
-}
+//     props: { 
+//       sports,
+//       leagues,
+//     }
+//   }
+// }

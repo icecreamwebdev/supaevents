@@ -19,6 +19,7 @@ export default function Home({events}) {
             return (
               <div key={event.id}>
                 <p>{event.eventors[0].title} vs {event.eventors[0].title}</p>
+                <p>test</p>
               </div>
             )
 
@@ -64,7 +65,7 @@ export default function Home({events}) {
 
 export async function getStaticProps(){
 
-  const data = await getLeagues()
+  // const data = await getLeagues()
   const events = await getEvents()
   const newEvents = JSON.parse(JSON.stringify(events))
 

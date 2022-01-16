@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Ch {
+  chID        Int      @id @default(autoincrement())
+  title       String   @unique
+  region      Region   @default(us)
+  affLink     String?
+  imgUrl      String
+  description String?
+  Eventor     Eventor? @relation(fields: [eventorEID], references: [eID])
+  eventorEID  Int?
+}
+
+model Eventor {
+
+  eID       Int     @id @default(autoincrement())
+  type      String
+  title     String
+  slug      String
+  country   String
+  sport     Sport?  @relation(fields: [sportSID], references: [sID])
+  league    League? @relation(fields: [leagueLID], references: [lID])
+  imgUrl    String?
+  ch        Ch[]
+  sportSID  Int?
+  leagueLID Int?
+  Event     Event?  @relation(fields: [eventEID], references: [eID])
+  eventEID  Int?
+}
+
+model League {
+
+  lID         Int       @id @default(autoincrement())
+  title       String    @unique
+  description String?
+  sport       Sport?    @relation(fields: [sportSID], references: [sID])
+  imgUrl      String?
+  Eventor     Eventor[]
+  sportSID    Int?
+  Event       Event[]
+}
+
+model Sport {
+
+  sID         Int      @id @default(autoincrement())
+  title       String   @unique
+  description String?
+  // type        sportType @default(team)
+  leagues     League[]
+  ImgUrl      String?
+
+  Eventor Eventor[]
+  Event   Event[]
+}
+
+enum Region {
+  us
+  uk
+  aus
+}
+
+// enum sportType{
+//   team
+//   individual
+// }
+
+model Event {
+
+  eID        Int       @id @default(autoincrement())
+  type       String // fight or game or match
+  eventors   Eventor[]
+  sport      Sport?    @relation(fields: [sportSID], references: [sID])
+  league     League?   @relation(fields: [leagueLID], references: [lID])
+  ImgUrl     String?
+  sTime      DateTime
+  eTime      DateTime
+  isFeatured Boolean
+  sportSID   Int?
+  leagueLID  Int?
+}
+

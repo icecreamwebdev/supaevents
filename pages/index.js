@@ -34,14 +34,19 @@ export async function getServerSideProps(){
 
   const leagueData = await supabase
   .from('League')
-  .select()
+  .select(`
+    title,
+      Sport (
+        title
+      )
+  `)
 
  
   const sports =  await sportData
   const leagues =  await leagueData
  
-  console.log(sports)
-  console.log(leagues)
+  
+  console.log(leagues.body[0].Sport.title)
 
 
 

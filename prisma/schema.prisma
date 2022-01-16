@@ -21,8 +21,8 @@ model Ch {
 model Eventor {
 
   eID       Int     @id @default(autoincrement())
-  type      String
   title     String
+  type      sportType
   slug      String
   country   String
   sport     Sport?  @relation(fields: [sportSID], references: [sID])
@@ -66,10 +66,10 @@ enum Region {
   aus
 }
 
-// enum sportType{
-//   team
-//   individual
-// }
+enum sportType{
+  Team
+  Individual
+}
 
 model Event {
 

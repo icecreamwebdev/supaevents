@@ -16,22 +16,24 @@ model Ch {
   description String?
   Eventor     Eventor? @relation(fields: [eventorEID], references: [eID])
   eventorEID  Int?
+  Event       Event?   @relation(fields: [eventEID], references: [eID])
+  eventEID    Int?
 }
 
 model Eventor {
 
-  eID       Int     @id @default(autoincrement())
+  eID       Int       @id @default(autoincrement())
   title     String
   type      sportType
   slug      String
   country   String
-  sport     Sport?  @relation(fields: [sportSID], references: [sID])
-  league    League? @relation(fields: [leagueLID], references: [lID])
+  sport     Sport?    @relation(fields: [sportSID], references: [sID])
+  league    League?   @relation(fields: [leagueLID], references: [lID])
   imgUrl    String?
   ch        Ch[]
   sportSID  Int?
   leagueLID Int?
-  Event     Event?  @relation(fields: [eventEID], references: [eID])
+  Event     Event?    @relation(fields: [eventEID], references: [eID])
   eventEID  Int?
 }
 
@@ -52,10 +54,9 @@ model Sport {
   sID         Int      @id @default(autoincrement())
   title       String   @unique
   description String?
-  // type        sportType @default(team)
+  type        sportType @default(team)
   leagues     League[]
   ImgUrl      String?
-
   Eventor Eventor[]
   Event   Event[]
 }
@@ -66,18 +67,19 @@ enum Region {
   aus
 }
 
-enum sportType{
-  Team
-  Individual
+enum sportType {
+  team
+  individual
 }
 
 model Event {
 
   eID        Int       @id @default(autoincrement())
-  type       String // fight or game or match
+  type       sportType// fight or game or match
   eventors   Eventor[]
   sport      Sport?    @relation(fields: [sportSID], references: [sID])
   league     League?   @relation(fields: [leagueLID], references: [lID])
+  ch         Ch[]
   ImgUrl     String?
   sTime      DateTime
   eTime      DateTime
@@ -85,4 +87,3 @@ model Event {
   sportSID   Int?
   leagueLID  Int?
 }
-

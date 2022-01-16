@@ -3,15 +3,28 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { supabase } from '../utils/supabaseClient'
 import { PrismaClient } from '.prisma/client'
-import { getLeagues } from '../utils/prismaQuery'
+import { getLeagues, getEvents} from '../utils/prismaQuery'
 
 
-export default function Home({eventor}) {
-
+export default function Home({events}) {
   return (
     <>
    <h1 className='center justify-center flex text-green-500'>my supabase app</h1>
-     {eventor.map(league => <h1 key={league.id}>{league.title}</h1>)}   
+     {/* {events.map(event => <h1 key={event.id}>{event.eventor.title}</h1>)}  */}
+
+
+      <div>
+        {events.map((event) => {
+
+            return (
+              <div key={event.id}>
+                <p>{event.eventors[0].title} vs {event.eventors[0].title}</p>
+              </div>
+            )
+
+        })}
+
+      </div>
    </>
   )
 }
@@ -52,11 +65,14 @@ export default function Home({eventor}) {
 export async function getStaticProps(){
 
   const data = await getLeagues()
+  const events = await getEvents()
+  const newEvents = JSON.parse(JSON.stringify(events))
+
   return {
     
   props: {
 
-    eventor: data
+    events: newEvents
   }
 
 

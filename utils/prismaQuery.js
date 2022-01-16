@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+// import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
 
 export async function getLeagues(){
 
@@ -14,7 +14,11 @@ export async function getLeagues(){
 export async function getEvents(){
 
   const data = await prisma.event.findMany({include: {
-    eventors: true}})
+    eventors: {
+      select: {
+        title: true,
+      }, // Return all fields
+  },}})
 
   return data
 

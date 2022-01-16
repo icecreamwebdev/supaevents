@@ -63,10 +63,34 @@ export default function Home({events}) {
 //   }
 // }
 
-export async function getStaticProps(){
+// export async function getServerSideProps(){
 
+//   // const data = await getLeagues()
+//   const events = await getEvents()
+//   const newEvents = JSON.parse(JSON.stringify(events))
+
+//   return {
+    
+//   props: {
+
+//     events: newEvents
+//   }
+
+
+// }
+// }
+
+
+export async function getServerSideProps(){
+
+  const prisma = new PrismaClient()
   // const data = await getLeagues()
-  const events = await getEvents()
+  const events = await prisma.event.findMany({include: {
+    eventors: {
+      select: {
+        title: true,
+      }, // Return all fields
+  },}})
   const newEvents = JSON.parse(JSON.stringify(events))
 
   return {
@@ -79,3 +103,5 @@ export async function getStaticProps(){
 
 }
 }
+
+
